@@ -1,0 +1,44 @@
+<html>
+	<head>
+		<title>Pdf viewer</title>
+	</head>
+	<body>
+		<div>
+			<input
+				id="inputFile"
+				type="file"
+				type="file"
+				accept=".pdf"
+				onchange="convertToBase64();"
+			/>
+		</div>
+		<div>
+			<object>
+				<embed id="pdfID" type="text/html" width="1200" height="600" />
+			</object>
+		</div>
+		<script type="text/javascript">
+			function convertToBase64() {
+				//Read File
+				var selectedFile = document.getElementById("inputFile").files;
+				//Check File is not Empty
+				if (selectedFile.length > 0) {
+					// Select the very first file from list
+					var fileToLoad = selectedFile[0];
+					// FileReader function for read the file.
+					var fileReader = new FileReader();
+					var base64;
+					// Onload of file read the file content
+					fileReader.onload = function (fileLoadedEvent) {
+						base64 = fileLoadedEvent.target.result;
+						// Print data in console
+						document.getElementById("pdfID").src = `${base64}`;
+						console.log(base64);
+					};
+					// Convert data to base64
+					fileReader.readAsDataURL(fileToLoad);
+				}
+			}
+		</script>
+	</body>
+</html>
